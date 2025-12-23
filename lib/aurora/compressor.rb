@@ -49,8 +49,8 @@ module Aurora
 
         if abc.refrigeration_monitoring?
           @heating_liquid_line_temperature = registers[1109]
-          @discharge_pressure  = registers[1113]
-          @suction_temperature = registers[1115]
+          @discharge_pressure  = registers[1115]
+          @suction_temperature = registers[1113]
           @suction_pressure    = registers[1116]
           @saturated_condensor_discharge_temperature = registers[1134]
           @heat_of_extraction = registers[1154]
