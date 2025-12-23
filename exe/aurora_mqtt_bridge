@@ -203,6 +203,14 @@ class MQTTBridge
                       hass: { sensor: { device_class: :temperature,
                                         state_class: :measurement,
                                         entity_category: :diagnostic } })
+        node.property("leaving-air-temperature",
+              "Leaving Air Temperature",
+              :float,
+              @abc.leaving_air_temperature,
+              unit: "°F",
+              hass: { sensor: { device_class: :temperature,
+                                state_class: :measurement,
+                                entity_category: :diagnostic } })
       end
       node.property("low-pressure-switch",
                     "Low Pressure Switch Status",
@@ -215,16 +223,6 @@ class MQTTBridge
                     @abc.high_pressure_switch,
                     format: %w[open closed])
 
-      if @abc.awl_communicating?
-        node.property("leaving-air-temperature",
-                      "Leaving Air Temperature",
-                      :float,
-                      @abc.leaving_air_temperature,
-                      unit: "°F",
-                      hass: { sensor: { device_class: :temperature,
-                                        state_class: :measurement,
-                                        entity_category: :diagnostic } })
-      end
       # TODO: figure out the config if this actually exists
       if @abc.awl_communicating? && !@abc.outdoor_temperature.zero?
         node.property("outdoor-temperature",

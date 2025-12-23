@@ -233,6 +233,7 @@ module Aurora
       if performance_monitoring?
         @leaving_water_temperature  = registers[1110]
         @entering_water_temperature = registers[1111]
+        @leaving_air_temperature    = registers[1112]
       end
       @outdoor_temperature        = registers[742]
       @air_coil_temperature       = registers[20]
@@ -331,11 +332,36 @@ module Aurora
     # assuming for now that _any_ AXB has at least performance
     # monitoring.
     def performance_monitoring?
-      axb?
+      #if there isn't and AXB then it can't have performance monitoring
+      return false unless axb?
+      # Performance monitoring is indicated by the 15th character of the model number
+      # (zero-based index 14). Return true for 7 and 5 series systems that include it.
+      ch = @model&.to_s[14]
+      return false if ch.nil? || ch == " "
+
+      case ch
+      when 'C', 'D', 'G', 'H', 'K'
+        true
+      else
+        false
+      end
     end
 
     def refrigeration_monitoring?
-      @energy_monitor >= 1
+      #if there isn't and AXB then it can't have refrigeration monitoring
+      return false unless axb?
+
+      ch = @model&.to_s[1]
+      return false if ch.nil? || ch == " "
+      # the refrigeration package is standard on 7 series so all V models with VS drives 
+      return true if ch == "V"
+
+      case ch
+      when 'D', 'H'
+        true
+      else 
+        false
+      end
     end
 
     def energy_monitoring?
