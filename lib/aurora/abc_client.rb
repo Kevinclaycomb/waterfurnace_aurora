@@ -201,7 +201,7 @@ module Aurora
       @registers_to_read = [6, 19..20, 25, 30..31, 112, 344, @entering_air_register]
       @registers_to_read << 1104 if axb?
       @registers_to_read.push(741..742) if awl_communicating?
-      @registers_to_read << (1110..1111) if performance_monitoring?
+      @registers_to_read << (1110..1112) if performance_monitoring?
       @registers_to_read.push(16, 1150..1153) if energy_monitoring?
       @registers_to_read << 900 if awl_axb?
       zones.each do |z|
