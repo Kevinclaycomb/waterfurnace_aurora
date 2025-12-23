@@ -314,6 +314,30 @@ class MQTTBridge
                       @abc.compressor.heat_of_rejection,
                       unit: "Btuh",
                       hass: { sensor: { state_class: :measurement } })
+        node.property("discharge-pressure",
+                      "Discharge Pressure",
+                      :float,
+                      @abc.compressor.discharge_pressure,
+                      unit: "psi",
+                      hass: { sensor: { device_class: :pressure,
+                                        state_class: :measurement,
+                                        entity_category: :diagnostic } })
+        node.property("suction-temperature",
+                      "Suction Temperature",
+                      :float,
+                      @abc.compressor.suction_temperature,
+                      unit: "°F",
+                      hass: { sensor: { device_class: :temperature,
+                                        state_class: :measurement,
+                                        entity_category: :diagnostic } })
+        node.property("suction-pressure",
+                      "Suction Pressure",
+                      :float,
+                      @abc.compressor.suction_pressure,
+                      unit: "psi",
+                      hass: { sensor: { device_class: :pressure,
+                                        state_class: :measurement,
+                                        entity_category: :diagnostic } })
       end
       if @abc.energy_monitoring?
         node.property("watts",

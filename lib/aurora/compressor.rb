@@ -11,7 +11,10 @@ module Aurora
                   :heating_liquid_line_temperature,
                   :saturated_condensor_discharge_temperature,
                   :heat_of_extraction,
-                  :heat_of_rejection
+                  :heat_of_rejection,
+                  :suction_pressure,
+                  :suction_temperature,
+                  :discharge_pressure
 
       def initialize(abc, stages)
         super(abc)
@@ -28,7 +31,7 @@ module Aurora
 
       def registers_to_read
         result = [19]
-        result.push(1109, 1134, 1154..1157) if abc.refrigeration_monitoring?
+        result.push(1109,1113,1115,1116, 1134, 1154..1157) if abc.refrigeration_monitoring?
         result << (1146..1147) if abc.energy_monitoring?
         result
       end
@@ -46,6 +49,9 @@ module Aurora
 
         if abc.refrigeration_monitoring?
           @heating_liquid_line_temperature = registers[1109]
+          @discharge_pressure  = registers[1113]
+          @suction_temperature = registers[1115]
+          @suction_pressure    = registers[1116]
           @saturated_condensor_discharge_temperature = registers[1134]
           @heat_of_extraction = registers[1154]
           @heat_of_rejection = registers[1156]
