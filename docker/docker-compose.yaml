@@ -4,9 +4,9 @@ services:
   waterfurnace_aurora:
     container_name: waterfurnace_aurora
     build: 
-      context: https://github.com/ccutrer/waterfurnace_aurora.git#main
+      context: https://github.com/kevinclaycomb/waterfurnace_aurora.git#five_series_updates
       dockerfile: ./docker/Dockerfile
-    image: ccutrer/waterfurnace_aurora
+    image: kevinclaycomb/waterfurnace_aurora
     devices:
       - '/dev/ttyUSB0'
     environment:
